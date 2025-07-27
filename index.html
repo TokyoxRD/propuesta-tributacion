@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta de Tributación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #4CB749 0%, #75BF46 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(76, 183, 73, 0.3);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        main {
+            margin-top: 0;
+        }
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .slide:nth-child(even) {
+            background: linear-gradient(135deg, #F0FFF0 0%, #E6F3E6 100%);
+        }
+        .slide-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .slide-text h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #4CB749, #75BF46);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        .slide-text p {
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
+            margin-bottom: 1.5rem;
+            color: #495057;
+            text-align: justify;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #4CB749, #75BF46);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 183, 73, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 183, 73, 0.4);
+        }
+        .slide-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        .visual-element {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: linear-gradient(135deg, #4CB749, #75BF46);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(76, 183, 73, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .chart-placeholder {
+            width: 80%;
+            height: 80%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .dgii-logo-img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            display: block;
+        }
+        .visual-element::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #4CB749;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #4CB749;
+            font-weight: 600;
+        }
+        .feature-card p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .team-member {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #4CB749;
+        }
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4CB749, #75BF46);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+        .team-member h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #4CB749;
+            font-weight: 600;
+        }
+        .team-member h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        .team-member p {
+            color: #6c757d;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .contact-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: #4CB749;
+            box-shadow: 0 10px 30px rgba(76,183,73,0.2);
+        }
+        .contact-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #4CB749;
+            font-weight: 600;
+        }
+        .contact-card p {
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        .contact-card .contact-info {
+            font-weight: 600;
+            color: #495057;
+            word-break: break-all;
+        }
+        .group-banner {
+            margin-top: 66px;
+            background: linear-gradient(135deg, #6cbe6c 0%, #85d06d 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 0;
+        }
+        .group-banner h1 {
+            font-size: clamp(1.8rem, 3vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .group-banner p {
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
+            opacity: 0.9;
+        }
+        footer {
+            background: linear-gradient(135deg, #4CB749, #75BF46);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: white;
+        }
+        .footer-section p, .footer-section ul {
+            opacity: 0.9;
+            line-height: 1.6;
+            list-style: none;
+        }
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-section a:hover {
+            color: rgba(255,255,255,0.7);
+        }
+        @media (max-width: 900px) {
+            .slide-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            .slide-text {
+                order: 2;
+            }
+            .slide-visual {
+                order: 1;
+                margin-bottom: 2rem;
+            }
+            .visual-element {
+                height: 250px;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+            .footer-section {
+                text-align: center;
+            }
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <div class="logo-icon">G2</div>
+                <span class="logo-text">Propuesta de Tributación</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#propuesta">Propuesta</a></li>
+                <li><a href="#detalles-propuesta">Detalles</a></li>
+                <li><a href="#equipo">Equipo</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+<main>
+    <div class="group-banner">
+        <div class="container">
+            <h1>Propuesta de Tributación</h1>
+            <p>Un Grupo Especializado Enfocado en la Reforma Fiscal</p>
+        </div>
+    </div>
+    <section id="propuesta" class="slide">
+        <div class="container">
+            <div class="slide-content">
+                <div class="slide-text">
+                    <h2>Nuestra Propuesta para un Sector Tributario Eficiente</h2>
+                    <p>Como grupo especializado, presentamos una propuesta integral a un sector clave del gobierno, con el firme objetivo de abordar y erradicar la <b>desformalización y la no declaración de impuestos</b>. Entendemos que estos desafíos representan obstáculos significativos para el desarrollo económico y la equidad fiscal del país.</p>
+                    <p>Nuestra iniciativa se centra en la implementación de estrategias innovadoras que no solo busquen aumentar la recaudación, sino también fomentar una cultura de cumplimiento voluntario, simplificar los procesos y generar confianza entre los contribuyentes y la administración tributaria. Creemos en un sistema tributario justo, transparente y accesible para todos.</p>
+                    <a href="#detalles-propuesta" class="cta-button">Ver Propuesta Detallada</a>
+                </div>
+                <div class="slide-visual">
+                    <div class="visual-element">
+                        <div class="chart-placeholder">
+                            <img src="Logo DGII + CúPULA.png" alt="Logo DGII" class="dgii-logo-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="detalles-propuesta" class="slide">
+        <div class="container">
+            <div class="slide-content" style="grid-template-columns: 1fr;">
+                <div class="slide-text" style="text-align: center;">
+                    <h2>Pilares de Nuestra Propuesta</h2>
+                    <p>Nuestra estrategia se basa en un enfoque multifacético para fomentar la formalización y optimizar la recaudación.</p>
+                </div>
+            </div>
+            <div class="features-grid animate-on-scroll">
+                <div class="feature-card">
+                    <h3>Red de Promotores Fiscales Comunitarios</h3>
+                    <p>Creación de una red de agentes locales capacitados para orientar y educar a microempresas sobre los beneficios de la formalización, ayudándoles a comprender y cumplir con sus obligaciones tributarias de manera sencilla y accesible en su propia comunidad.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Incentivos a la Formalización</h3>
+                    <p>Implementación de programas de incentivos que incluyen: acceso a microcréditos con tasas preferenciales, programas de capacitación en gestión empresarial y finanzas, y una drástica simplificación de trámites para el registro y la declaración, reduciendo la carga administrativa.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Monitoreo y Sanciones Progresivas</h3>
+                    <p>Establecimiento de un sistema de monitoreo que identifica la informalidad, aplicando sanciones leves y progresivas en lugar de multas abruptas. El enfoque es educativo y gradual, incentivando la corrección antes que el castigo severo, promoviendo la adaptación al sistema.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Digitalización y Simplificación</h3>
+                    <p>Desarrollo de herramientas digitales amigables y simplificadas para facilitar la declaración y el pago de impuestos. Esto incluye aplicaciones móviles y plataformas web intuitivas diseñadas específicamente para microempresarios, eliminando la necesidad de gestores externos.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Transparencia y Confianza</h3>
+                    <p>Aumento de la transparencia en el uso de los recursos fiscales y la rendición de cuentas. Se busca construir una relación de confianza entre el contribuyente y la administración tributaria, mostrando el impacto positivo de la formalización en el desarrollo comunitario y nacional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="equipo" class="slide">
+        <div class="container">
+            <div class="slide-content">
+                <div class="slide-text">
+                    <h2>Red Fiscal Comunitaria - Estructura del Programa</h2>
+                    <p>El programa "Red Fiscal Comunitaria" implementa una estructura territorial organizada para combatir la desformalización mediante promotores fiscales locales que educan, acompañan y regulan a las microempresas dominicanas.</p>
+                    <p>La cobertura será progresiva en tres grupos territoriales, iniciando con 6 provincias piloto de alta prioridad y expandiéndose gradualmente hasta lograr cobertura nacional completa.</p>
+                </div>
+            </div>
+            <div class="team-grid animate-on-scroll">
+                <div class="team-member">
+                    <div class="member-avatar">CP</div>
+                    <h3>Coordinador Provincial</h3>
+                    <h4>Líder Territorial</h4>
+                    <p>Responsable de supervisar la implementación del programa en cada provincia, coordinando con DGII, ayuntamientos y cámaras de comercio. Gestiona equipos de 15-25 promotores fiscales y supervisa las jornadas comunitarias de formalización.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">SZ</div>
+                    <h3>Supervisor Zonal</h3>
+                    <h4>Gestión Operativa</h4>
+                    <p>Supervisa directamente a los promotores fiscales en sectores específicos como mercados y rutas comerciales. Coordina las jornadas trimestrales de sensibilización y asegura el cumplimiento de metas de formalización por zona asignada.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">PF</div>
+                    <h3>Promotor Fiscal Comunitario</h3>
+                    <h4>Agente de Campo</h4>
+                    <p>Jóvenes profesionales en contabilidad, administración o derecho, residentes en las comunidades asignadas. Realizan visitas periódicas, asisten con trámites de RNC, capacitan en facturación y ofrecen acceso a microcréditos como incentivo.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">SD</div>
+                    <h3>Soporte Digital y Legal</h3>
+                    <h4>DGII Móvil</h4>
+                    <p>Equipo rotativo especializado en herramientas digitales y asesoría legal. Proporciona soporte técnico para la app "Formalízate RD", maneja la línea de ayuda fiscal comunitaria y asiste en casos complejos de formalización.</p>
+                </div>
+            </div>
+            <div class="slide-content" style="margin-top: 4rem;">
+                <div class="slide-text" style="text-align: center;">
+                    <h2>Fases de Implementación del Programa</h2>
+                    <p>La Red Fiscal Comunitaria se desarrollará en 5 fases estratégicas durante 18 meses, con cobertura progresiva y monitoreo continuo de resultados.</p>
+                </div>
+            </div>
+            <div class="features-grid animate-on-scroll" style="margin-top: 2rem;">
+                <div class="feature-card">
+                    <h3>Fase 1: Diagnóstico Territorial</h3>
+                    <p><strong>3 meses:</strong> Mapeo geográfico y clasificación de zonas fiscales por nivel de informalidad. Identificación de mercados, calles comerciales y barrios con alta concentración de microempresas no formalizadas usando datos de DGII y ONE.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Fase 2: Capacitación de Promotores</h3>
+                    <p><strong>2 meses:</strong> Reclutamiento y formación de promotores fiscales por DGII, INFOTEP y MIPYMES. Capacitación en legislación tributaria básica, técnicas de sensibilización y uso de herramientas digitales de formalización.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Fase 3: Jornadas Comunitarias</h3>
+                    <p><strong>Permanente:</strong> Ciclos trimestrales de jornadas de sensibilización en espacios públicos. Asistencia para RNC simplificado, inscripción en RST, talleres de facturación y acceso a microcréditos como incentivo.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Fase 4: Monitoreo y Seguimiento</h3>
+                    <p><strong>Continuo:</strong> Visitas periódicas a comercios formalizados, acompañamiento en trámites, sistema de incentivos con sello "Negocio Formalizado" y acceso preferencial a licitaciones locales y capacitaciones gratuitas.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Fase 5: Sanciones Progresivas</h3>
+                    <p><strong>Gradual:</strong> Régimen de sanciones leves: primera falta (advertencia + charla), segunda falta (multa simbólica + cierre temporal), tercera falta (reporte a DGII + sanción económica formal).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contacto" class="slide">
+        <div class="container">
+            <div class="slide-content">
+                <div class="slide-text">
+                    <h2>Canales de Comunicación Oficial</h2>
+                    <p>La "Propuesta de Tributación" mantiene canales de comunicación directa para facilitar el intercambio de información, coordinar reuniones de trabajo y brindar seguimiento continuo al desarrollo de la propuesta.</p>
+                    <p>Nuestro equipo está disponible para presentaciones ejecutivas, sesiones de trabajo técnico y consultas especializadas sobre la implementación del proyecto de modernización tributaria.</p>
+                </div>
+            </div>
+            <div class="contact-methods animate-on-scroll">
+                <div class="contact-card" onclick="window.location.href='mailto:propuestatrib@gmail.com'">
+                    <h3>Correo Institucional</h3>
+                    <p class="contact-info">propuestatrib@gmail.com</p>
+                    <p>Comunicación oficial y documentos técnicos</p>
+                    <p>Respuesta garantizada en 24 horas</p>
+                </div>
+                <div class="contact-card" onclick="window.location.href='tel:+18090000000'">
+                    <h3>Línea Directa</h3>
+                    <p class="contact-info">+1 (809) 000-0000</p>
+                    <p>Atención telefónica especializada</p>
+                    <p>Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+                </div>
+                <div class="contact-card" onclick="window.open()">
+                    <h3>LinkedIn Corporativo</h3>
+                    <p class="contact-info">@PropuestaTributacion</p>
+                    <p>Actualidades del proyecto</p>
+                    <p>Red profesional y actualizaciones</p>
+                </div>
+                <div class="contact-card" onclick="scheduleCall()">
+                    <h3>Reunión Ejecutiva</h3>
+                    <p class="contact-info">Agenda Personalizada</p>
+                    <p>Presentación técnica detallada</p>
+                    <p>Modalidad presencial o virtual</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Propuesta de Tributación</h3>
+                <p>Propuesta de Modernización del Sistema Tributario Nacional desarrollada por un equipo técnico especializado en administración pública y tecnología.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>Email: <a href="mailto:propuestatrib@gmail.com">propuestatrib@gmail.com</a><br>
+                Teléfono: <a href="tel:+18090000000">+1 (809) 000-0000</a><br>
+                LinkedIn: <a href="https://linkedin.com/company/propuestatrib" target="_blank">@PropuestaTributacion</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Propuesta</h3>
+                <ul>
+                    <li><a href="#propuesta">Nuestra Propuesta</a></li>
+                    <li><a href="#detalles-propuesta">Digitalización y Simplificación</a></li>
+                    <li><a href="#detalles-propuesta">Transparencia y Confianza</a></li>
+                    <li><a href="#detalles-propuesta">Monitoreo y Sanciones Progresivas</a></li>
+                </ul>
+            </div>
+        </div>
+        <p>&copy; 2025 Propuesta de Tributación. Todos los derechos reservados.</p>     
+    </div>
+</footer>
+<script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const logoText = document.querySelector('.logo-text');
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.animate-on-scroll').forEach(element => {
+            observer.observe(element);
+        });
+    });
+    function scheduleCall() {
+        alert('Por favor, envíenos un correo o llámenos para agendar una reunión ejecutiva.');
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    });
+    function adjustLogoVisibility() {
+        if (window.innerWidth >= 769) {
+            logoText.style.display = 'inline';
+        } else {
+            logoText.style.display = 'inline';
+        }
+    }
+    adjustLogoVisibility();
+    window.addEventListener('resize', adjustLogoVisibility);
+</script>
+</body>
+</html>
